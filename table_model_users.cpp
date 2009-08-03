@@ -1,8 +1,15 @@
+#include <QtGlobal>
 #include "table_model_users.h"
+       
+TableModelUsers::TableModelUsers(QObject *parent) : QAbstractTableModel(parent)
+{
+//    struct User user = {1,"Biesenbach","Bjoern"};
+//    users << user;
+}
 
 int TableModelUsers::rowCount(const QModelIndex &parent ) const
 {
-    return 5;
+    return users.size();
 }
 
 int TableModelUsers::columnCount(const QModelIndex &parent) const
@@ -17,7 +24,14 @@ QVariant TableModelUsers::data(const QModelIndex &index, int role) const
     if (index.row() >= 5)
         return QVariant();
     if (role == Qt::DisplayRole)
-        return "asd";
+    {
+        if(index.column() == 0)
+            return users[index.row()].name;
+        if(index.column() == 1)
+            return users[index.row()].surname;
+        if(index.column() == 2)
+            return users[index.row()].nick;
+    }
     else
         return QVariant();
 }
@@ -33,3 +47,9 @@ QVariant TableModelUsers::headerData(int section, Qt::Orientation orientation, i
         return QVariant();
 }
 
+void TableModelUsers::insertUser(struct User user)
+{
+    beginInsertRows(QModelIndex(),0,1);
+    users << user;
+    endInsertRows();
+}

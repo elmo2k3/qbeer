@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>647</width>
-    <height>546</height>
+    <width>643</width>
+    <height>537</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,11 +15,35 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
-     <widget class="QTableView" name="tableViewTags"/>
-    </item>
-    <item>
-     <widget class="QTextEdit" name="textEditTags"/>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Users</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QTableView" name="tableViewTags"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Tags</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QTextEdit" name="textEditTags"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -28,7 +52,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>647</width>
+     <width>643</width>
      <height>27</height>
     </rect>
    </property>
@@ -37,6 +61,8 @@
      <string>Beer</string>
     </property>
     <addaction name="actionConnect"/>
+    <addaction name="separator"/>
+    <addaction name="actionProperties"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -61,6 +87,11 @@
     <string>&amp;Quit</string>
    </property>
   </action>
+  <action name="actionProperties">
+   <property name="text">
+    <string>Properties</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
@@ -81,5 +112,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionProperties</sender>
+   <signal>activated()</signal>
+   <receiver>qbeer</receiver>
+   <slot>showProperties()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>321</x>
+     <y>268</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>showProperties()</slot>
+ </slots>
 </ui>
