@@ -15,3 +15,5 @@ HEADERS += qbeer.h \
     configdialog.h
 FORMS += qbeer.ui \
     configdialog.ui
+
+RESOURCES += res.qrc

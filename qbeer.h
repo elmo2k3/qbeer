@@ -6,6 +6,8 @@
 #include <QCryptographicHash>
 #include <QStringList>
 #include <QStringListModel>
+#include <QSettings>
+#include <QTimer>
 
 #include "table_model_users.h"
 #include "beer_connection.h"
@@ -24,17 +26,18 @@ class qbeer : public QMainWindow
         qbeer(QWidget *parent = 0);
         ~qbeer();
 
-    public slots:
-        void gotAuth(QString level); 
-        void gotUser(struct User user); 
     private slots:
         void showProperties();
-        void saveProperties();
+        void connectToHost();
+        void gotAuth(QString level); 
+        void gotUser(struct User user); 
+        void gotLastTag(QString lastTag, QString lastTime);
+        void gotConnection(void); 
 
     private:
         Ui::qbeer *ui;
         BeerConnection *connection;
-        ConfigDialog *configdialog;
+        QTimer *timer;
 };
 
 #endif // QBEER_H

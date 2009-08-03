@@ -1,3 +1,4 @@
+#include <iostream>
 #include <QString>
 #include <QStringList>
 #include <QCryptographicHash>
@@ -41,8 +42,11 @@ void BeerConnection::evaluateData(void)
                 {
                     emit gotAuth(list[1]);
                 }
-                m_got_auth = 1;
-                m_last_type = -1;
+                else if(!list[0].compare("OK\r\n"))
+                {
+                    m_got_auth = 1;
+                    m_last_type = -1;
+                }
             }
             else if(m_last_type == COMMAND_GET_USER_BY_ID)
             {
@@ -61,8 +65,20 @@ void BeerConnection::evaluateData(void)
                     m_temp_user.permission = list[1].toInt();
                     emit gotUser(m_temp_user);
                 }
-                else if(!list[0].compare("OK"))
+                else if(!list[0].compare("OK\r\n"))
                     m_last_type = -1;
+            }
+            else if(m_last_type == COMMAND_LAST_TAGID)
+            {
+                if(!list[0].compare("time_last_tagid"))
+                    m_lastTime = list[1].trimmed();
+                else if(!list[0].compare("last_tagid"))
+                    m_lastTag = list[1].trimmed();
+                else if(!list[0].compare("OK\r\n"))
+                {
+                    emit gotLastTag(m_lastTag, m_lastTime);
+                    m_last_type = -1;
+                }
             }
         }
         else if(!list[0].compare("command"))
@@ -71,6 +87,10 @@ void BeerConnection::evaluateData(void)
                 m_last_type = COMMAND_GET_AUTH_STRING;
             else if(!list[1].trimmed().compare("auth"))
                 m_last_type = COMMAND_AUTH;
+            else if(!list[1].trimmed().compare("last_tagid"))
+            {
+                m_last_type = COMMAND_LAST_TAGID;
+            }
             else if(!list[1].trimmed().compare("get_user_by_id")
                 || !list[1].trimmed().compare("get_all_users"))
                 m_last_type = COMMAND_GET_USER_BY_ID;
@@ -99,4 +119,18 @@ void BeerConnection::getAllUsers()
     this->write("get_all_users\n");
     flush();
 }
+
+void BeerConnection::getLastTag()
+{
+    this->write("last_tagid\n");
+    flush();
+}
+
+void BeerConnection::disconnect()
+{
+    m_got_auth = -1;
+    m_last_type = -1;
+    disconnectFromHost();
+}
+
 

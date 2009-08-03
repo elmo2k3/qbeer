@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>643</width>
+    <width>1098</width>
     <height>537</height>
    </rect>
   </property>
@@ -14,12 +14,15 @@
    <string>qbeer</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QGridLayout" name="gridLayout">
     <property name="bottomMargin">
      <number>0</number>
     </property>
-    <item>
+    <item row="2" column="0">
      <widget class="QTabWidget" name="tabWidget">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="currentIndex">
        <number>0</number>
       </property>
@@ -45,6 +48,82 @@
       </widget>
      </widget>
     </item>
+    <item row="0" column="0" rowspan="2">
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="res.qrc">:/pics/res/Beernary_counter_600.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Last scanned tag</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>TagId</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEditLastTag">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>User</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEditLastUser">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Time</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="lineEditLastTime">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -52,21 +131,26 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>643</width>
+     <width>1098</width>
      <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuBeer">
     <property name="title">
-     <string>Beer</string>
+     <string>&amp;Beer</string>
     </property>
     <addaction name="actionConnect"/>
     <addaction name="separator"/>
-    <addaction name="actionProperties"/>
-    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="actionProperties_2"/>
+   </widget>
    <addaction name="menuBeer"/>
+   <addaction name="menuEdit"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -87,14 +171,16 @@
     <string>&amp;Quit</string>
    </property>
   </action>
-  <action name="actionProperties">
+  <action name="actionProperties_2">
    <property name="text">
-    <string>Properties</string>
+    <string>&amp;Properties</string>
    </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionQuit</sender>
@@ -113,7 +199,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionProperties</sender>
+   <sender>actionProperties_2</sender>
    <signal>activated()</signal>
    <receiver>qbeer</receiver>
    <slot>showProperties()</slot>
@@ -128,8 +214,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionConnect</sender>
+   <signal>activated()</signal>
+   <receiver>qbeer</receiver>
+   <slot>connectToHost()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>321</x>
+     <y>268</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showProperties()</slot>
+  <slot>connectToHost()</slot>
  </slots>
 </ui>

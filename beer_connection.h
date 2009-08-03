@@ -6,7 +6,8 @@ enum COMMAND_TYPE
 {
     COMMAND_GET_AUTH_STRING,
     COMMAND_AUTH,
-    COMMAND_GET_USER_BY_ID
+    COMMAND_GET_USER_BY_ID,
+    COMMAND_LAST_TAGID
 };
 
 struct User
@@ -38,15 +39,20 @@ class BeerConnection : public QTcpSocket
     signals:
         void gotAuth(QString string);
         void gotUser(struct User user);
+        void gotLastTag(QString lastTag, QString lastTime);
 
     private slots:
         void evaluateData(void);
+    public slots:
+        void disconnect(void);
+        void getLastTag();
 
     private:
     int m_got_auth;
     int m_last_type;
     QString m_user;
     QString m_password;
+    QString m_lastTag, m_lastTime;
     struct User m_temp_user;
 };
 

@@ -13,6 +13,11 @@ public:
     ConfigDialog(QWidget *parent = 0);
     ~ConfigDialog();
 
+    QString getAddress(void);
+
+private slots:
+    void accept();
+
 protected:
     void changeEvent(QEvent *e);
 
