@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="pics" >
+    <file>res/Beernary_counter_600.png</file>
+  </qresource>
+</RCC>
