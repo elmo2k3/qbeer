@@ -32,10 +32,12 @@ class qbeer : public QMainWindow
         void gotAuth(QString level); 
         void gotLastTag(QString lastTag, QString lastTime);
         void gotConnection(void); 
+        void insertEmptyUser(void);
 
     private:
         Ui::qbeer *ui;
         BeerConnection *connection;
+        TableModelUsers *users;
         QTimer *timer;
 };
 

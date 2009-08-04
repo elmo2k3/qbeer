@@ -139,6 +139,17 @@ void BeerConnection::updateUser(struct User user)
     flush();
 }
 
+void BeerConnection::insertUser(struct User user)
+{
+    QString line;
+    QTextStream(&line) << "insert_user \"" << user.name << "\" \"" <<
+        user.surname << "\" \"" << user.nick << "\" \"" << user.email << "\" \"" << user.age <<
+        "\" \"" << user.weight << "\" \"" << user.size << "\" \"" << user.gender << "\" \"" << user.permission
+        << "\" \"" << user.password << "\"\n";
+    this->write(line.toLatin1());
+    flush();
+}
+
 void BeerConnection::getLastTag()
 {
     this->write("last_tagid\n");

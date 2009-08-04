@@ -14,7 +14,7 @@ qbeer::qbeer(QWidget *parent)
     ui->setupUi(this);
 
     connection = new BeerConnection(this);
-    TableModelUsers *users = new TableModelUsers(this);
+    users = new TableModelUsers(this);
     timer = new QTimer(this);
     
     connect(connection, SIGNAL(gotAuth(QString)), this, SLOT(gotAuth(QString)));
@@ -55,6 +55,14 @@ void qbeer::gotAuth(QString level)
     connection->getLastTag();
     connect(timer, SIGNAL(timeout()),connection, SLOT(getLastTag()));
     timer->start(500);
+}
+
+void qbeer::insertEmptyUser()
+{
+    struct User user = { 0,"","","","","",0,0,0,0,1};
+    connection->insertUser(user);
+    users->clear();
+    connection->getAllUsers();
 }
 
 qbeer::~qbeer()

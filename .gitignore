@@ -1,0 +1,10 @@
+*.swp
+Session.vim
+moc_*
+ui_*
+*.o
+Makefile
+qrc_*
+qbeer
+tags
+*.user

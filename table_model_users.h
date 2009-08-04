@@ -25,9 +25,10 @@ class TableModelUsers : public QAbstractTableModel
 
     public slots:
         void insertUser(struct User user);
+        void clear();
 
     private:
-        QList<struct User*> users;
+        QList<struct User> users;
 };
 
 #endif

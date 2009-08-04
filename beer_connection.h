@@ -45,6 +45,7 @@ class BeerConnection : public QTcpSocket
         void evaluateData(void);
     public slots:
         void updateUser(struct User user);
+        void insertUser(struct User user);
         void disconnect(void);
         void getLastTag();
 
