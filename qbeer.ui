@@ -42,7 +42,7 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QTextEdit" name="textEditTags"/>
+         <widget class="QTreeView" name="treeViewTags"/>
         </item>
        </layout>
       </widget>

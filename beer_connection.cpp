@@ -60,6 +60,14 @@ void BeerConnection::evaluateData(void)
                     m_temp_user.nick = list[1].trimmed();
                 else if(!list[0].compare("email"))
                     m_temp_user.email = list[1].trimmed();
+                else if(!list[0].compare("age"))
+                    m_temp_user.age = list[1].trimmed().toInt();
+                else if(!list[0].compare("weight"))
+                    m_temp_user.weight = list[1].trimmed().toInt();
+                else if(!list[0].compare("size"))
+                    m_temp_user.size = list[1].trimmed().toInt();
+                else if(!list[0].compare("gender"))
+                    m_temp_user.gender = list[1].trimmed().toInt();
                 else if(!list[0].compare("permission"))
                 {
                     m_temp_user.permission = list[1].toInt();
@@ -117,6 +125,17 @@ void BeerConnection::getUserById(qint32 id)
 void BeerConnection::getAllUsers()
 {
     this->write("get_all_users\n");
+    flush();
+}
+
+void BeerConnection::updateUser(struct User user)
+{
+    QString line;
+    QTextStream(&line) << "update_user \"" << user.id << "\" \"" << user.name << "\" \"" <<
+        user.surname << "\" \"" << user.nick << "\" \"" << user.email << "\" \"" << user.age <<
+        "\" \"" << user.weight << "\" \"" << user.size << "\" \"" << user.gender << "\" \"" << user.permission
+        << "\" \"" << user.password << "\"\n";
+    this->write(line.toLatin1());
     flush();
 }
 

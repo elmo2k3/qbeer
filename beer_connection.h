@@ -12,7 +12,7 @@ enum COMMAND_TYPE
 
 struct User
 {
-    qint32 id;
+    int id;
     QString name;
     QString surname;
     QString nick;
@@ -44,6 +44,7 @@ class BeerConnection : public QTcpSocket
     private slots:
         void evaluateData(void);
     public slots:
+        void updateUser(struct User user);
         void disconnect(void);
         void getLastTag();
 

@@ -30,7 +30,6 @@ class qbeer : public QMainWindow
         void showProperties();
         void connectToHost();
         void gotAuth(QString level); 
-        void gotUser(struct User user); 
         void gotLastTag(QString lastTag, QString lastTime);
         void gotConnection(void); 
 
