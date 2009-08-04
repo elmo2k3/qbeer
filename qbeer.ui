@@ -24,7 +24,7 @@
     <property name="bottomMargin">
      <number>0</number>
     </property>
-    <item row="2" column="0">
+    <item row="2" column="0" rowspan="2">
      <widget class="QTabWidget" name="tabWidget">
       <property name="enabled">
        <bool>true</bool>
@@ -36,9 +36,90 @@
        <attribute name="title">
         <string>Users</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0" rowspan="2">
          <widget class="QTableView" name="tableViewTags"/>
+        </item>
+        <item row="0" column="1">
+         <widget class="QFrame" name="frame_3">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>80</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QGroupBox" name="groupBox_3">
+             <property name="title">
+              <string>Permission</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <item>
+               <widget class="QLabel" name="labelPermission">
+                <property name="text">
+                 <string>NONE</string>
+                </property>
+                <property name="scaledContents">
+                 <bool>false</bool>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QFrame" name="frame_2">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QGroupBox" name="groupBox_2">
+             <property name="title">
+              <string>Commands</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <widget class="QPushButton" name="pushButtonNewUser">
+                <property name="text">
+                 <string>New user</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton">
+                <property name="text">
+                 <string>Delete user</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -54,7 +135,7 @@
       </widget>
      </widget>
     </item>
-    <item row="0" column="0" rowspan="2" colspan="2">
+    <item row="0" column="0" colspan="2">
      <widget class="QFrame" name="frame">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -121,40 +202,6 @@
            <widget class="QLineEdit" name="lineEditLastTime">
             <property name="readOnly">
              <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QFrame" name="frame_2">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QGroupBox" name="groupBox_2">
-         <property name="title">
-          <string>Commands</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <item>
-           <widget class="QPushButton" name="pushButtonNewUser">
-            <property name="text">
-             <string>New user</string>
             </property>
            </widget>
           </item>
@@ -277,12 +324,28 @@
    <slot>insertEmptyUser()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1010</x>
-     <y>364</y>
+     <x>976</x>
+     <y>426</y>
     </hint>
     <hint type="destinationlabel">
      <x>947</x>
      <y>361</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>qbeer</receiver>
+   <slot>deleteCurrentUser()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1012</x>
+     <y>468</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>815</x>
+     <y>203</y>
     </hint>
    </hints>
   </connection>
@@ -291,5 +354,6 @@
   <slot>showProperties()</slot>
   <slot>connectToHost()</slot>
   <slot>insertEmptyUser()</slot>
+  <slot>deleteCurrentUser()</slot>
  </slots>
 </ui>

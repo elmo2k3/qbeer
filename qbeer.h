@@ -35,6 +35,9 @@ class qbeer : public QMainWindow
         void insertEmptyUser(void);
 
     private:
+        void readSettings(void);
+        void closeEvent(QCloseEvent *event);
+        void writeSettings(void);
         Ui::qbeer *ui;
         BeerConnection *connection;
         TableModelUsers *users;

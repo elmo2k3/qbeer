@@ -1,4 +1,5 @@
 #include <iostream>
+#include <QCloseEvent>
 #include "qbeer.h"
 #include "ui_qbeer.h"
 
@@ -13,6 +14,7 @@ qbeer::qbeer(QWidget *parent)
 
     ui->setupUi(this);
 
+    readSettings();
     connection = new BeerConnection(this);
     users = new TableModelUsers(this);
     timer = new QTimer(this);
@@ -24,6 +26,7 @@ qbeer::qbeer(QWidget *parent)
     connect(users, SIGNAL(updateUser(struct User)), connection, SLOT(updateUser(struct User)));
     
     ui->tableViewTags->setModel(users);
+    connectToHost();
 }
 
 void qbeer::gotLastTag(QString lastTag, QString lastTime)
@@ -46,6 +49,7 @@ void qbeer::gotConnection()
     QSettings settings;
     connection->auth(settings.value("user").toString(),
         settings.value("password").toString());
+    users->clear();
 }
 
 void qbeer::gotAuth(QString level)
@@ -55,6 +59,7 @@ void qbeer::gotAuth(QString level)
     connection->getLastTag();
     connect(timer, SIGNAL(timeout()),connection, SLOT(getLastTag()));
     timer->start(500);
+    ui->labelPermission->setText(level);
 }
 
 void qbeer::insertEmptyUser()
@@ -74,8 +79,29 @@ void qbeer::showProperties()
 {
     QSettings settings;
     ConfigDialog configdialog;
-    if(configdialog.exec())
-    {
-        settings.setValue("address",configdialog.getAddress());
-    }
+    configdialog.exec();
+}
+
+void qbeer::writeSettings()
+{
+    QSettings settings;
+    settings.beginGroup("MainWindow");
+    settings.setValue("size", size());
+    settings.setValue("pos", pos());
+    settings.endGroup();
+}
+
+void qbeer::readSettings()
+{
+    QSettings settings;
+    settings.beginGroup("MainWindow");
+    resize(settings.value("size", QSize(400, 400)).toSize());
+    move(settings.value("pos", QPoint(200, 200)).toPoint());
+    settings.endGroup();
+}
+
+void qbeer::closeEvent(QCloseEvent *event)
+{
+        writeSettings();
+        event->accept();
 }
