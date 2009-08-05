@@ -27,6 +27,7 @@
 #include <QStringListModel>
 #include <QSettings>
 #include <QTimer>
+#include <QSystemTrayIcon>
 
 #include "table_model_users.h"
 #include "beer_connection.h"
@@ -52,6 +53,7 @@ class qbeer : public QMainWindow
         void gotLastTag(QString lastTag, QString lastTime);
         void gotConnection(void); 
         void insertEmptyUser(void);
+        void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
 
     private:
         void readSettings(void);
@@ -61,6 +63,8 @@ class qbeer : public QMainWindow
         BeerConnection *connection;
         TableModelUsers *users;
         QTimer *timer;
+        QSystemTrayIcon *icon;
+        QMenu *iconMenu;
 };
 
 #endif // QBEER_H

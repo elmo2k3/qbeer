@@ -34,15 +34,23 @@ qbeer::qbeer(QWidget *parent)
     ui->setupUi(this);
 
     readSettings();
+
     connection = new BeerConnection(this);
     users = new TableModelUsers(this);
     timer = new QTimer(this);
+    iconMenu = new QMenu(this);
+    iconMenu->addAction(ui->actionQuit);
+    icon = new QSystemTrayIcon(QIcon(":/icons/res/Beer_mug.png"),this);
+    icon->setContextMenu(iconMenu);
+    icon->show();
     
     connect(connection, SIGNAL(gotAuth(QString)), this, SLOT(gotAuth(QString)));
     connect(connection, SIGNAL(gotLastTag(QString,QString)), this, SLOT(gotLastTag(QString,QString)));
     connect(connection, SIGNAL(gotUser(struct User)), users, SLOT(insertUser(struct User)));
     connect(connection, SIGNAL(connected()), this, SLOT(gotConnection()));
     connect(users, SIGNAL(updateUser(struct User)), connection, SLOT(updateUser(struct User)));
+    connect(icon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, 
+        SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
     
     ui->tableViewTags->setModel(users);
     connectToHost();
@@ -123,4 +131,15 @@ void qbeer::closeEvent(QCloseEvent *event)
 {
         writeSettings();
         event->accept();
+}
+        
+void qbeer::trayIconClicked(QSystemTrayIcon::ActivationReason reason)
+{
+    if(reason == QSystemTrayIcon::Trigger)
+    {
+        if(this->isVisible())
+            this->hide();
+        else
+            this->show();
+    }
 }

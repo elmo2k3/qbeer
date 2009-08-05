@@ -2,4 +2,7 @@
   <qresource prefix="pics" >
     <file>res/Beernary_counter_600.png</file>
   </qresource>
+  <qresource prefix="icons" >
+    <file>res/Beer_mug.png</file>
+  </qresource>
 </RCC>
