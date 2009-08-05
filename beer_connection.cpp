@@ -21,6 +21,7 @@
 #include <QString>
 #include <QStringList>
 #include <QCryptographicHash>
+#include <QMessageBox>
 #include "beer_connection.h"
 
 BeerConnection::BeerConnection(QObject *parent) : QTcpSocket(parent)
@@ -28,6 +29,7 @@ BeerConnection::BeerConnection(QObject *parent) : QTcpSocket(parent)
     m_last_type = -1;
     m_got_auth = 0;
     connect(this, SIGNAL(readyRead()), this, SLOT(evaluateData()));
+    connect(this, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(errorBox(QAbstractSocket::SocketError)));
 }
         
 void BeerConnection::evaluateData(void)
@@ -183,3 +185,10 @@ void BeerConnection::disconnect()
 }
 
 
+void BeerConnection::errorBox(QAbstractSocket::SocketError socketError)
+{
+    QMessageBox msgBox;
+    msgBox.setText(this->errorString());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+}

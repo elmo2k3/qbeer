@@ -62,6 +62,7 @@ class BeerConnection : public QTcpSocket
 
     private slots:
         void evaluateData(void);
+        void errorBox(QAbstractSocket::SocketError socketError);
     public slots:
         void updateUser(struct User user);
         void insertUser(struct User user);
