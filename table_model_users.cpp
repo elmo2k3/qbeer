@@ -34,7 +34,7 @@ int TableModelUsers::rowCount(const QModelIndex &parent ) const
 
 int TableModelUsers::columnCount(const QModelIndex &parent) const
 {
-    return 10;
+    return 11;
 }
 
 QVariant TableModelUsers::data(const QModelIndex &index, int role) const
@@ -72,6 +72,18 @@ QVariant TableModelUsers::data(const QModelIndex &index, int role) const
             return users[index.row()].size;
         if(index.column() == 9)
             return users[index.row()].gender;
+        if(index.column() == 10)
+        {
+            QString allUsersTags;
+            for(int i=0;i < tags.size(); i++)
+            {
+                if(tags[i].userid == users[index.row()].id)
+                {
+                    QTextStream(&allUsersTags) << tags[i].tag << endl;
+                }
+            }
+            return allUsersTags;
+        }
     }
     
     return QVariant();
@@ -124,7 +136,7 @@ Qt::ItemFlags TableModelUsers::flags(const QModelIndex &index) const
 
 QVariant TableModelUsers::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    QString header[10] = {"Name","Surname","Nick","E-Mail","Password","Permission","Age","Weight","Size","Gender"};
+    QString header[11] = {"Name","Surname","Nick","E-Mail","Password","Permission","Age","Weight","Size","Gender","Tags"};
     if (role != Qt::DisplayRole)
         return QVariant();
     if (orientation == Qt::Horizontal)
@@ -142,6 +154,11 @@ void TableModelUsers::insertUser(struct User user)
     endInsertRows();
 }
 
+void TableModelUsers::insertTag(struct Tag tag)
+{
+    tags << tag;
+}
+
 bool TableModelUsers::insertRow(int row, const QModelIndex & parent)
 {
     return true;
@@ -150,6 +167,7 @@ bool TableModelUsers::insertRow(int row, const QModelIndex & parent)
 void TableModelUsers::clear()
 {
     users.clear();
+    tags.clear();
     reset();
 }
 

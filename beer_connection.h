@@ -26,7 +26,8 @@ enum COMMAND_TYPE
     COMMAND_GET_AUTH_STRING,
     COMMAND_AUTH,
     COMMAND_GET_USER_BY_ID,
-    COMMAND_LAST_TAGID
+    COMMAND_LAST_TAGID,
+    COMMAND_GET_TAG
 };
 
 struct User
@@ -44,6 +45,14 @@ struct User
     qint32 permission;
 };
 
+struct Tag
+{
+    int id;
+    QString tag;
+    int userid;
+    int permission;
+};
+
 class BeerConnection : public QTcpSocket
 {
     Q_OBJECT
@@ -54,10 +63,12 @@ class BeerConnection : public QTcpSocket
         void auth(QString user, QString password);
         void getUserById(qint32 id);
         void getAllUsers();
+        void getAllTags();
 
     signals:
         void gotAuth(QString string);
         void gotUser(struct User user);
+        void gotTag(struct Tag tag);
         void gotLastTag(QString lastTag, QString lastTime, QString lastUserId);
 
     private slots:
@@ -77,6 +88,7 @@ class BeerConnection : public QTcpSocket
     QString m_lastTag, m_lastTime, m_lastUser;
     bool m_tag_is_new;
     struct User m_temp_user;
+    struct Tag m_temp_tag;
 };
 
 #endif

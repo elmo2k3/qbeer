@@ -98,6 +98,22 @@ void BeerConnection::evaluateData(void)
                 else if(!list[0].compare("OK\r\n"))
                     m_last_type = -1;
             }
+            else if(m_last_type == COMMAND_GET_TAG)
+            {
+                if(!list[0].compare("rowid"))
+                    m_temp_tag.id = list[1].toInt();
+                else if(!list[0].compare("tagid"))
+                    m_temp_tag.tag = list[1].trimmed();
+                else if(!list[0].compare("userid"))
+                    m_temp_tag.userid = list[1].trimmed().toInt();
+                else if(!list[0].compare("permission"))
+                {
+                    m_temp_tag.permission = list[1].toInt();
+                    emit gotTag(m_temp_tag);
+                }
+                else if(!list[0].compare("OK\r\n"))
+                    m_last_type = -1;
+            }
             else if(m_last_type == COMMAND_LAST_TAGID)
             {
                 if(!list[0].compare("time_last_tagid"))
@@ -142,8 +158,10 @@ void BeerConnection::evaluateData(void)
             else if(!list[1].trimmed().compare("auth"))
                 m_last_type = COMMAND_AUTH;
             else if(!list[1].trimmed().compare("last_tagid"))
-            {
                 m_last_type = COMMAND_LAST_TAGID;
+            else if(!list[1].trimmed().compare("get_all_tags"))
+            {
+                m_last_type = COMMAND_GET_TAG;
             }
             else if(!list[1].trimmed().compare("get_user_by_id")
                 || !list[1].trimmed().compare("get_all_users"))
@@ -171,6 +189,12 @@ void BeerConnection::getUserById(qint32 id)
 void BeerConnection::getAllUsers()
 {
     this->write("get_all_users\n");
+    flush();
+}
+
+void BeerConnection::getAllTags()
+{
+    this->write("get_all_tags\n");
     flush();
 }
 

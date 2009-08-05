@@ -51,6 +51,8 @@ qbeer::qbeer(QWidget *parent)
         SLOT(gotLastTag(QString,QString,QString)));
     connect(connection, SIGNAL(gotUser(struct User)), users, 
         SLOT(insertUser(struct User)));
+    connect(connection, SIGNAL(gotTag(struct Tag)), users, 
+        SLOT(insertTag(struct Tag)));
     connect(connection, SIGNAL(connected()), this, SLOT(gotConnection()));
     connect(users, SIGNAL(updateUser(struct User)), connection, 
         SLOT(updateUser(struct User)));
@@ -103,8 +105,9 @@ void qbeer::gotConnection()
 void qbeer::gotAuth(QString level)
 {
 //    connection->getUserById(1);
-    connection->getAllUsers();
+    connection->getAllTags();
     connection->getLastTag();
+    connection->getAllUsers();
     connect(timer, SIGNAL(timeout()),connection, SLOT(getLastTag()));
     timer->start(500);
     ui->labelPermission->setText(level);

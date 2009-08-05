@@ -26,10 +26,12 @@ class TableModelUsers : public QAbstractTableModel
 
     public slots:
         void insertUser(struct User user);
+        void insertTag(struct Tag tag);
         void clear();
 
     private:
         QList<struct User> users;
+        QList<struct Tag> tags;
 };
 
 #endif
