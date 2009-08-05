@@ -39,16 +39,21 @@ qbeer::qbeer(QWidget *parent)
     users = new TableModelUsers(this);
     timer = new QTimer(this);
     iconMenu = new QMenu(this);
-    iconMenu->addAction(ui->actionQuit);
     icon = new QSystemTrayIcon(QIcon(":/icons/res/Beer_mug.png"),this);
+    
+    iconMenu->addAction(ui->actionQuit);
     icon->setContextMenu(iconMenu);
+    icon->setToolTip("cd /pub; more beer");
     icon->show();
     
     connect(connection, SIGNAL(gotAuth(QString)), this, SLOT(gotAuth(QString)));
-    connect(connection, SIGNAL(gotLastTag(QString,QString)), this, SLOT(gotLastTag(QString,QString)));
-    connect(connection, SIGNAL(gotUser(struct User)), users, SLOT(insertUser(struct User)));
+    connect(connection, SIGNAL(gotLastTag(QString,QString,QString)), this, 
+        SLOT(gotLastTag(QString,QString,QString)));
+    connect(connection, SIGNAL(gotUser(struct User)), users, 
+        SLOT(insertUser(struct User)));
     connect(connection, SIGNAL(connected()), this, SLOT(gotConnection()));
-    connect(users, SIGNAL(updateUser(struct User)), connection, SLOT(updateUser(struct User)));
+    connect(users, SIGNAL(updateUser(struct User)), connection, 
+        SLOT(updateUser(struct User)));
     connect(icon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, 
         SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
     
@@ -56,8 +61,24 @@ qbeer::qbeer(QWidget *parent)
     connectToHost();
 }
 
-void qbeer::gotLastTag(QString lastTag, QString lastTime)
+void qbeer::gotLastTag(QString lastTag, QString lastTime, QString lastUserId)
 {
+    struct User *user;
+    if(lastUserId.toInt() > 0)
+    {
+        user = users->getUserById(lastUserId.toInt());
+        if(user)
+        {
+            ui->lineEditLastUser->setText(user->nick);
+        }
+    }
+    else 
+    {
+        icon->showMessage("Unauthorized tag scanned", "Beware! There might be a beer-thief!!",
+            QSystemTrayIcon::Warning, 10000);
+        ui->lineEditLastUser->setText("Unknown");
+    }
+
     ui->lineEditLastTag->setText(lastTag);
     ui->lineEditLastTime->setText(lastTime);
 }

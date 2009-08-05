@@ -19,6 +19,7 @@ class TableModelUsers : public QAbstractTableModel
         bool setData(const QModelIndex &index, const QVariant &value, int role=Qt::EditRole);
         Qt::ItemFlags flags(const QModelIndex &index) const;
         bool insertRow(int row, const QModelIndex & parent = QModelIndex());
+        struct User *getUserById(int id);
 
     signals:
         void updateUser(struct User user);

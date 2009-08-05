@@ -73,8 +73,8 @@ QVariant TableModelUsers::data(const QModelIndex &index, int role) const
         if(index.column() == 9)
             return users[index.row()].gender;
     }
-    else
-        return QVariant();
+    
+    return QVariant();
 }
 
 bool TableModelUsers::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -129,6 +129,8 @@ QVariant TableModelUsers::headerData(int section, Qt::Orientation orientation, i
         return QVariant();
     if (orientation == Qt::Horizontal)
         return header[section];
+    else if(orientation == Qt::Vertical)
+        return section+1;
     else
         return QVariant();
 }
@@ -150,3 +152,20 @@ void TableModelUsers::clear()
     users.clear();
     reset();
 }
+
+struct User *TableModelUsers::getUserById(int id)
+{
+    struct User *user;
+    user = new struct User;
+    for(int i=0; i<users.size(); i++)
+    {
+        if(users.at(i).id == id)
+        {
+            return &users[i];
+        }
+    }
+    delete user;
+    return NULL;
+}
+
+

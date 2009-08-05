@@ -50,7 +50,7 @@ class qbeer : public QMainWindow
         void showProperties();
         void connectToHost();
         void gotAuth(QString level); 
-        void gotLastTag(QString lastTag, QString lastTime);
+        void gotLastTag(QString lastTag, QString lastTime, QString lastUserId);
         void gotConnection(void); 
         void insertEmptyUser(void);
         void trayIconClicked(QSystemTrayIcon::ActivationReason reason);

@@ -58,7 +58,7 @@ class BeerConnection : public QTcpSocket
     signals:
         void gotAuth(QString string);
         void gotUser(struct User user);
-        void gotLastTag(QString lastTag, QString lastTime);
+        void gotLastTag(QString lastTag, QString lastTime, QString lastUserId);
 
     private slots:
         void evaluateData(void);
@@ -74,7 +74,8 @@ class BeerConnection : public QTcpSocket
     int m_last_type;
     QString m_user;
     QString m_password;
-    QString m_lastTag, m_lastTime;
+    QString m_lastTag, m_lastTime, m_lastUser;
+    bool m_tag_is_new;
     struct User m_temp_user;
 };
 

@@ -28,6 +28,7 @@ BeerConnection::BeerConnection(QObject *parent) : QTcpSocket(parent)
 {
     m_last_type = -1;
     m_got_auth = 0;
+    m_tag_is_new = 1;
     connect(this, SIGNAL(readyRead()), this, SLOT(evaluateData()));
     connect(this, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(errorBox(QAbstractSocket::SocketError)));
 }
@@ -100,12 +101,36 @@ void BeerConnection::evaluateData(void)
             else if(m_last_type == COMMAND_LAST_TAGID)
             {
                 if(!list[0].compare("time_last_tagid"))
-                    m_lastTime = list[1].trimmed();
+                {
+                    if(m_lastTime.compare(list[1].trimmed()))
+                    {
+                        m_tag_is_new = 1;
+                        m_lastTime = list[1].trimmed();
+                    }
+                }
                 else if(!list[0].compare("last_tagid"))
-                    m_lastTag = list[1].trimmed();
+                {
+                    if(m_lastTag.compare(list[1].trimmed()))
+                    {
+                        m_tag_is_new = 1;
+                        m_lastTag = list[1].trimmed();
+                    }
+                }
+                else if(!list[0].compare("user_id"))
+                {
+                    if(m_lastUser.compare(list[1].trimmed()))
+                    {
+                        m_tag_is_new = 1;
+                        m_lastUser = list[1].trimmed();
+                    }
+                }
                 else if(!list[0].compare("OK\r\n"))
                 {
-                    emit gotLastTag(m_lastTag, m_lastTime);
+                    if(m_tag_is_new)
+                    {
+                        emit gotLastTag(m_lastTag, m_lastTime, m_lastUser);
+                        m_tag_is_new = 0;
+                    }
                     m_last_type = -1;
                 }
             }
