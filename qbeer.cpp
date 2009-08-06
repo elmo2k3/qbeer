@@ -121,6 +121,15 @@ void qbeer::insertEmptyUser()
     connection->getAllUsers();
 }
 
+void qbeer::insertEmptyUserWithTag()
+{
+    struct User user = { 0,"","","","","",0,0,0,0,1};
+    connection->insertUserWithTag(user, ui->lineEditLastTag->text(), 0);
+    users->clear();
+    connection->getAllUsers();
+    connection->getAllTags();
+}
+
 qbeer::~qbeer()
 {
     delete ui;

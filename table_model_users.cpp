@@ -41,8 +41,8 @@ QVariant TableModelUsers::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
-    if (index.row() >= 5)
-        return QVariant();
+//    if (index.row() >= 5)
+//        return QVariant();
     if (role == Qt::DisplayRole)
     {
         if(index.column() == 0)

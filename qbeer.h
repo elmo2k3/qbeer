@@ -53,6 +53,7 @@ class qbeer : public QMainWindow
         void gotLastTag(QString lastTag, QString lastTime, QString lastUserId);
         void gotConnection(void); 
         void insertEmptyUser(void);
+        void insertEmptyUserWithTag(void);
         void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
 
     private:

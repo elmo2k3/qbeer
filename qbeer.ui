@@ -109,6 +109,13 @@
                </widget>
               </item>
               <item>
+               <widget class="QPushButton" name="pushButtonNewFromLastTag">
+                <property name="text">
+                 <string>New from last tag</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QPushButton" name="pushButton">
                 <property name="text">
                  <string>Delete user</string>
@@ -316,8 +323,8 @@
    <slot>insertEmptyUser()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>976</x>
-     <y>426</y>
+     <x>1052</x>
+     <y>393</y>
     </hint>
     <hint type="destinationlabel">
      <x>947</x>
@@ -341,11 +348,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButtonNewFromLastTag</sender>
+   <signal>clicked()</signal>
+   <receiver>qbeer</receiver>
+   <slot>insertEmptyUserWithTag()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>946</x>
+     <y>417</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>824</x>
+     <y>191</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showProperties()</slot>
   <slot>connectToHost()</slot>
   <slot>insertEmptyUser()</slot>
   <slot>deleteCurrentUser()</slot>
+  <slot>insertEmptyUserWithTag()</slot>
  </slots>
 </ui>
