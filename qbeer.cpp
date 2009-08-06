@@ -68,10 +68,17 @@ void qbeer::gotLastTag(QString lastTag, QString lastTime, QString lastUserId)
     struct User *user;
     if(lastUserId.toInt() > 0)
     {
+        QSettings settings;
         user = users->getUserById(lastUserId.toInt());
         if(user)
         {
             ui->lineEditLastUser->setText(user->nick);
+            ui->pushButtonNewFromLastTag->setEnabled(0);
+            if(!user->nick.compare(settings.value("user").toString()))
+            {
+                icon->showMessage("Tag scanned", "Your own tag has been scanned",
+                    QSystemTrayIcon::Information, 10000);
+            }
         }
     }
     else 
@@ -79,6 +86,7 @@ void qbeer::gotLastTag(QString lastTag, QString lastTime, QString lastUserId)
         icon->showMessage("Unauthorized tag scanned", "Beware! There might be a beer-thief!!",
             QSystemTrayIcon::Warning, 10000);
         ui->lineEditLastUser->setText("Unknown");
+        ui->pushButtonNewFromLastTag->setEnabled(1);
     }
 
     ui->lineEditLastTag->setText(lastTag);
@@ -106,11 +114,11 @@ void qbeer::gotAuth(QString level)
 {
 //    connection->getUserById(1);
     connection->getAllTags();
-    connection->getLastTag();
     connection->getAllUsers();
+//    connection->getLastTag();
     connect(timer, SIGNAL(timeout()),connection, SLOT(getLastTag()));
-    timer->start(500);
-    ui->labelPermission->setText(level);
+    timer->start(2000);
+    ui->statusBar->showMessage("Permission: "+level);
 }
 
 void qbeer::insertEmptyUser()
