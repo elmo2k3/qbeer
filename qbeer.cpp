@@ -65,6 +65,7 @@ qbeer::qbeer(QWidget *parent)
     connect(connection, SIGNAL(gotAllTags()), ui->tableViewTags, SLOT(resizeRowsToContents()));
     
     ui->tableViewTags->setModel(users);
+    ui->tableViewTags->setAlternatingRowColors(true);
     connectToHost();
 }
 
