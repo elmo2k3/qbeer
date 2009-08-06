@@ -112,7 +112,10 @@ void BeerConnection::evaluateData(void)
                     emit gotUser(m_temp_user);
                 }
                 else if(!list[0].compare("OK\r\n"))
+                {
+                    emit gotAllUsers();
                     m_last_type = -1;
+                }
             }
             else if(m_last_type == COMMAND_GET_TAG)
             {
@@ -128,7 +131,10 @@ void BeerConnection::evaluateData(void)
                     emit gotTag(m_temp_tag);
                 }
                 else if(!list[0].compare("OK\r\n"))
+                {
+                    emit gotAllTags();
                     m_last_type = -1;
+                }
             }
             else if(m_last_type == COMMAND_LAST_TAGID)
             {

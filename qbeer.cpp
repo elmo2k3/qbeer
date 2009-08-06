@@ -58,6 +58,11 @@ qbeer::qbeer(QWidget *parent)
         SLOT(updateUser(struct User)));
     connect(icon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, 
         SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
+
+    connect(connection, SIGNAL(gotAllUsers()), ui->tableViewTags, SLOT(resizeColumnsToContents()));
+    connect(connection, SIGNAL(gotAllUsers()), ui->tableViewTags, SLOT(resizeRowsToContents()));
+    connect(connection, SIGNAL(gotAllTags()), ui->tableViewTags, SLOT(resizeColumnsToContents()));
+    connect(connection, SIGNAL(gotAllTags()), ui->tableViewTags, SLOT(resizeRowsToContents()));
     
     ui->tableViewTags->setModel(users);
     connectToHost();
@@ -112,12 +117,15 @@ void qbeer::gotConnection()
 
 void qbeer::gotAuth(QString level)
 {
-//    connection->getUserById(1);
-    connection->getAllTags();
-    connection->getAllUsers();
-//    connection->getLastTag();
-    connect(timer, SIGNAL(timeout()),connection, SLOT(getLastTag()));
-    timer->start(2000);
+    if(!level.contains("NONE"))
+    {
+    //    connection->getUserById(1);
+        connection->getAllTags();
+        connection->getAllUsers();
+    //    connection->getLastTag();
+        connect(timer, SIGNAL(timeout()),connection, SLOT(getLastTag()));
+        timer->start(1000);
+    }
     ui->statusBar->showMessage("Permission: "+level);
 }
 

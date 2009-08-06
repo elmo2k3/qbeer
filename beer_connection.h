@@ -68,7 +68,9 @@ class BeerConnection : public QTcpSocket
     signals:
         void gotAuth(QString string);
         void gotUser(struct User user);
+        void gotAllUsers();
         void gotTag(struct Tag tag);
+        void gotAllTags();
         void gotLastTag(QString lastTag, QString lastTime, QString lastUserId);
 
     private slots:
