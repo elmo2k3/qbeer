@@ -74,15 +74,16 @@ qbeer::qbeer(QWidget *parent)
 void qbeer::gotLastTag(QString lastTag, QString lastTime, QString lastUserId)
 {
     struct User *user;
+    QSettings settings;
     if(lastUserId.toInt() > 0)
     {
-        QSettings settings;
         user = users->getUserById(lastUserId.toInt());
         if(user)
         {
             ui->lineEditLastUser->setText(user->nick);
             ui->pushButtonNewFromLastTag->setEnabled(0);
-            if(!user->nick.compare(settings.value("user").toString()))
+            if(!user->nick.compare(settings.value("user").toString()) &&
+               settings.value("popup_on_own_tag").toBool())
             {
                 icon->showMessage("Tag scanned", "Your own tag has been scanned",
                     QSystemTrayIcon::Information, 10000);
@@ -91,8 +92,11 @@ void qbeer::gotLastTag(QString lastTag, QString lastTime, QString lastUserId)
     }
     else 
     {
-        icon->showMessage("Unauthorized tag scanned", "Beware! There might be a beer-thief!!",
-            QSystemTrayIcon::Warning, 10000);
+        if(settings.value("popup_on_unknown_tag").toBool())
+        {
+            icon->showMessage("Unauthorized tag scanned", "Beware! There might be a beer-thief!!",
+                QSystemTrayIcon::Warning, 10000);
+        }
         ui->lineEditLastUser->setText("Unknown");
         ui->pushButtonNewFromLastTag->setEnabled(1);
     }

@@ -31,6 +31,8 @@ ConfigDialog::ConfigDialog(QWidget *parent) :
     m_ui->lineEditPort->setText(settings.value("port",5335).toString());
     m_ui->lineEditUser->setText(settings.value("user").toString());
     m_ui->lineEditPassword->setText(settings.value("password").toString());
+    m_ui->checkBoxUnknownTag->setChecked(settings.value("popup_on_unknown_tag",true).toBool());
+    m_ui->checkBoxOwnTag->setChecked(settings.value("popup_on_own_tag",true).toBool());
 }
 
 ConfigDialog::~ConfigDialog()
@@ -62,6 +64,8 @@ void ConfigDialog::accept()
     settings.setValue("port",m_ui->lineEditPort->text().toInt());
     settings.setValue("user",m_ui->lineEditUser->text());
     settings.setValue("password",m_ui->lineEditPassword->text());
+    settings.setValue("popup_on_unknown_tag",m_ui->checkBoxUnknownTag->isChecked());
+    settings.setValue("popup_on_own_tag",m_ui->checkBoxOwnTag->isChecked());
     done(1);
 }
 
