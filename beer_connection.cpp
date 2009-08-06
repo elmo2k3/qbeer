@@ -41,6 +41,22 @@ void BeerConnection::evaluateData(void)
     {
         this->readLine(buffer, 1024);
         list = QString::fromAscii(buffer).split(": ");
+        if(!list[0].compare("FAIL (drink more beer)\r\n"))
+        {
+            QMessageBox msgBox;
+            msgBox.setText("Command failed");
+            msgBox.setIcon(QMessageBox::Critical);
+            msgBox.exec();
+            break;
+        }
+        if(!list[0].compare("DENIED (drank too much beer?)\r\n"))
+        {
+            QMessageBox msgBox;
+            msgBox.setText("Command denied");
+            msgBox.setIcon(QMessageBox::Critical);
+            msgBox.exec();
+            break;
+        }
         if(m_last_type >= 0)
         {
             if(m_last_type == COMMAND_GET_AUTH_STRING)
@@ -216,6 +232,17 @@ void BeerConnection::insertUser(struct User user)
         user.surname << "\" \"" << user.nick << "\" \"" << user.email << "\" \"" << user.age <<
         "\" \"" << user.weight << "\" \"" << user.size << "\" \"" << user.gender << "\" \"" << user.permission
         << "\" \"" << user.password << "\"\n";
+    this->write(line.toLatin1());
+    flush();
+}
+
+void BeerConnection::insertUserWithTag(struct User user, QString tag, int permission)
+{
+    QString line;
+    QTextStream(&line) << "user_insert_with_tag \"" << user.name << "\" \"" <<
+        user.surname << "\" \"" << user.nick << "\" \"" << user.email << "\" \"" << user.age <<
+        "\" \"" << user.weight << "\" \"" << user.size << "\" \"" << user.gender << "\" \"" << user.permission
+        << "\" \"" << user.password << "\" \"" << tag << "\" \"" << permission << "\"\n";
     this->write(line.toLatin1());
     flush();
 }

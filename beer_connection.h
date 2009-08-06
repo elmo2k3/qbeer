@@ -77,6 +77,7 @@ class BeerConnection : public QTcpSocket
     public slots:
         void updateUser(struct User user);
         void insertUser(struct User user);
+        void insertUserWithTag(struct User user, QString tag, int permission);
         void disconnect(void);
         void getLastTag();
 
