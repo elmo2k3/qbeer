@@ -19,6 +19,7 @@
 
 #include <iostream>
 #include <QCloseEvent>
+#include <QMessageBox>
 #include "qbeer.h"
 #include "ui_qbeer.h"
 
@@ -32,6 +33,7 @@ qbeer::qbeer(QWidget *parent)
     QCoreApplication::setApplicationName("qbeer");
 
     ui->setupUi(this);
+    setWindowIcon(QIcon(":/icons/res/Beer_mug.png"));
 
     readSettings();
 
@@ -156,7 +158,8 @@ void qbeer::showProperties()
 {
     QSettings settings;
     ConfigDialog configdialog;
-    configdialog.exec();
+    if(configdialog.exec())
+        connectToHost();
 }
 
 void qbeer::writeSettings()
@@ -192,4 +195,18 @@ void qbeer::trayIconClicked(QSystemTrayIcon::ActivationReason reason)
         else
             this->show();
     }
+}
+
+void qbeer::deleteCurrentUser(void)
+{
+}
+
+void qbeer::about()
+{
+    QMessageBox aboutBox;
+    aboutBox.about(this, 
+        "The Beer Client","This is the Beer Client, a part of the Beernary-Counter project.\
+It comes with _absolutely_ no warranty whatsoever. Use it at your own risk \n\n\
+        Released under GPLv2\n\
+        Bjoern Biesenbach <bjoern@bjoern-b.de>");
 }

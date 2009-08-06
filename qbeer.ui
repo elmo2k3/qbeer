@@ -224,8 +224,15 @@
     </property>
     <addaction name="actionProperties_2"/>
    </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="action_About"/>
+   </widget>
    <addaction name="menuBeer"/>
    <addaction name="menuEdit"/>
+   <addaction name="menu_Help"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionConnect">
@@ -241,6 +248,11 @@
   <action name="actionProperties_2">
    <property name="text">
     <string>&amp;Properties</string>
+   </property>
+  </action>
+  <action name="action_About">
+   <property name="text">
+    <string>&amp;About</string>
    </property>
   </action>
  </widget>
@@ -345,6 +357,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_About</sender>
+   <signal>activated()</signal>
+   <receiver>qbeer</receiver>
+   <slot>about()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>548</x>
+     <y>268</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showProperties()</slot>
@@ -352,5 +380,6 @@
   <slot>insertEmptyUser()</slot>
   <slot>deleteCurrentUser()</slot>
   <slot>insertEmptyUserWithTag()</slot>
+  <slot>about()</slot>
  </slots>
 </ui>

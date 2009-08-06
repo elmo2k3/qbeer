@@ -55,6 +55,8 @@ class qbeer : public QMainWindow
         void insertEmptyUser(void);
         void insertEmptyUserWithTag(void);
         void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
+        void deleteCurrentUser(void);
+        void about(void);
 
     private:
         void readSettings(void);
