@@ -57,7 +57,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="res.qrc">:/pics/res/Beernary_counter_600.png</pixmap>
+          <pixmap resource="res.qrc">:/icons/res/Beernary_counter_400.png</pixmap>
          </property>
         </widget>
        </item>

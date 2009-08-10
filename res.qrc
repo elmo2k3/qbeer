@@ -4,5 +4,6 @@
   </qresource>
   <qresource prefix="icons" >
     <file>res/Beer_mug.png</file>
+    <file>res/Beernary_counter_400.png</file>
   </qresource>
 </RCC>
