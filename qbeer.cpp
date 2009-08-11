@@ -65,6 +65,7 @@ qbeer::qbeer(QWidget *parent)
     connect(connection, SIGNAL(gotAllUsers()), ui->tableViewTags, SLOT(resizeRowsToContents()));
     connect(connection, SIGNAL(gotAllTags()), ui->tableViewTags, SLOT(resizeColumnsToContents()));
     connect(connection, SIGNAL(gotAllTags()), ui->tableViewTags, SLOT(resizeRowsToContents()));
+    connect(connection, SIGNAL(gotAllUsers()), this, SLOT(gotAllUsers()));
     
     ui->tableViewTags->setModel(users);
     ui->tableViewTags->setAlternatingRowColors(true);
@@ -127,8 +128,8 @@ void qbeer::gotAuth(QString level)
     if(!level.contains("NONE"))
     {
     //    connection->getUserById(1);
-        connection->getAllTags();
         connection->getAllUsers();
+//        connection->getAllTags();
     //    connection->getLastTag();
         connect(timer, SIGNAL(timeout()),connection, SLOT(getLastTag()));
         timer->start(1000);
@@ -213,4 +214,9 @@ void qbeer::about()
 It comes with _absolutely_ no warranty whatsoever. Use it at your own risk \n\n\
         Released under GPLv2\n\
         Bjoern Biesenbach <bjoern@bjoern-b.de>");
+}
+
+void qbeer::gotAllUsers()
+{
+    connection->getAllTags();
 }

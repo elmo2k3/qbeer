@@ -175,6 +175,9 @@ void BeerConnection::evaluateData(void)
         }
         else if(!list[0].compare("command"))
         {
+/*            QMessageBox msgBox;
+            msgBox.setText(list[1]);
+            msgBox.exec();*/
             if(!list[1].trimmed().compare("get_auth_string"))
                 m_last_type = COMMAND_GET_AUTH_STRING;
             else if(!list[1].trimmed().compare("auth"))

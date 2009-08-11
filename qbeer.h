@@ -57,6 +57,7 @@ class qbeer : public QMainWindow
         void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
         void deleteCurrentUser(void);
         void about(void);
+        void gotAllUsers(void);
 
     private:
         void readSettings(void);
